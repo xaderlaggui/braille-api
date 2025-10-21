@@ -13,7 +13,6 @@ CORS(app)
 # Model and directories
 MODEL_URL = "https://www.dropbox.com/scl/fi/hno5xglstri1m9v3zo613/braille_model.h5?rlkey=fssf1nay26xa31fcen15elpmx&st=dkd2eamu&dl=1"
 MODEL_PATH = "braille_model.h5"
-TRAIN_DIR = "./Braille Dataset/train"
 UPLOAD_FOLDER = "./uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
