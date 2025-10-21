@@ -14,7 +14,10 @@ CORS(app)
 MODEL_URL = "https://www.dropbox.com/scl/fi/hno5xglstri1m9v3zo613/braille_model.h5?rlkey=fssf1nay26xa31fcen15elpmx&st=dkd2eamu&dl=1"
 MODEL_PATH = "braille_model.h5"
 UPLOAD_FOLDER = "./uploads"
+TRAIN_DIR = "./Braille Dataset/train"  # ✅ FIXED: added definition for TRAIN_DIR
+
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(TRAIN_DIR, exist_ok=True)  # ensures directory exists so no crash even if empty
 
 # Download model if not present
 if not os.path.exists(MODEL_PATH):
@@ -32,15 +35,19 @@ if not os.path.exists(MODEL_PATH):
 model = load_model(MODEL_PATH)
 print("✅ Model loaded successfully.")
 
-# Generate label mapping
-train_datagen = ImageDataGenerator(rescale=1.0/255)
-train_generator = train_datagen.flow_from_directory(
-    TRAIN_DIR,
-    target_size=(150, 150),
-    batch_size=42,
-    class_mode='categorical'
-)
-labels_map = {v: k for k, v in train_generator.class_indices.items()}
+# Generate label mapping safely
+try:
+    train_datagen = ImageDataGenerator(rescale=1.0/255)
+    train_generator = train_datagen.flow_from_directory(
+        TRAIN_DIR,
+        target_size=(150, 150),
+        batch_size=42,
+        class_mode='categorical'
+    )
+    labels_map = {v: k for k, v in train_generator.class_indices.items()}
+except Exception as e:
+    print(f"⚠️ Warning: Could not generate labels from {TRAIN_DIR} ({e})")
+    labels_map = {}
 
 # Image preprocessing
 def preprocess_image(image_path):
