@@ -17,7 +17,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})  # ✅ Allow Expo / Web / Mobile 
 # Model and Directory Setup
 # ==============================
 MODEL_PATH = "braille_model.h5"
-MODEL_URL = "https://drive.google.com/uc?export=download&id=1L8blof1IrLAGydJpba52NsbSzUfKUV0l"
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1P2g8-IU2BM0T3XK_QdWr5whrbM_fkc1N"
 TRAIN_DIR = "./Braille Dataset/train"
 UPLOAD_FOLDER = "./uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
